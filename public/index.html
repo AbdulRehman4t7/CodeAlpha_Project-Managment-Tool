@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeAlpha | Real-Time Project Management Tool</title>
+  
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- App Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <!-- Toast System -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Main Application Wrapper -->
+  <div id="app-wrapper">
+
+    <!-- 1. AUTH PAGE (Login / Register) -->
+    <div id="view-auth" class="view-container active-view">
+      <div class="auth-card-glow"></div>
+      <div class="auth-card glass">
+        <div class="auth-header">
+          <div class="auth-logo">
+            <span class="logo-icon"><i class="fa-solid fa-layer-group"></i></span>
+            <h1>Code<span>Alpha</span></h1>
+          </div>
+          <p id="auth-subtitle">Elevate your team collaboration experience</p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="form-login" class="auth-form active-form">
+          <div class="input-group">
+            <label for="login-email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" id="login-email" required placeholder="name@company.com">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="login-password">Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" id="login-password" required placeholder="••••••••">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>Login to Workspace</span>
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          </button>
+          <p class="auth-toggle-text">Don't have an account? <span id="btn-toggle-register">Create one now</span></p>
+        </form>
+
+        <!-- Register Form -->
+        <form id="form-register" class="auth-form">
+          <div class="input-group">
+            <label for="register-name">Full Name</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-user"></i>
+              <input type="text" id="register-name" required placeholder="John Doe">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="register-email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" id="register-email" required placeholder="john@example.com">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="register-password">Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" id="register-password" required placeholder="Choose a strong password">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>Register Account</span>
+            <i class="fa-solid fa-user-plus"></i>
+          </button>
+          <p class="auth-toggle-text">Already have an account? <span id="btn-toggle-login">Login here</span></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- 2. MAIN APP INTERFACE (Dashboard & Workspaces) -->
+    <div id="view-app" class="view-container">
+      
+      <!-- Side Navigation Panel -->
+      <aside class="sidebar glass">
+        <div class="sidebar-header">
+          <div class="app-logo">
+            <span class="logo-icon"><i class="fa-solid fa-layer-group"></i></span>
+            <h2>Code<span>Alpha</span></h2>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button class="nav-item active" id="nav-dashboard">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Dashboard</span>
+          </button>
+          <div class="nav-section-title">Active Projects</div>
+          <div id="sidebar-projects-list" class="sidebar-projects-list">
+            <!-- Dynamic project links injected here -->
+          </div>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="nav-item" id="nav-profile">
+            <img id="user-avatar-sidebar" src="https://ui-avatars.com/api/?name=User&background=8b5cf6&color=fff&bold=true" class="user-avatar" alt="Avatar">
+            <div class="user-meta-info">
+              <span id="user-name-sidebar" class="user-name">User Name</span>
+              <span id="user-email-sidebar" class="user-email">email@example.com</span>
+            </div>
+          </button>
+          <button class="nav-item btn-logout" id="btn-logout" title="Logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Layout Body -->
+      <main class="main-content">
+        
+        <!-- Header Ribbon -->
+        <header class="app-header glass">
+          <div class="header-left">
+            <h1 id="page-title">Dashboard</h1>
+          </div>
+          <div class="header-right">
+            <!-- Notifications Trigger Badge -->
+            <button id="btn-notifications-trigger" class="btn-icon" title="Notifications">
+              <i class="fa-regular fa-bell"></i>
+              <span id="notification-badge" class="badge">0</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- VIEW PANEL: DASHBOARD -->
+        <section id="panel-dashboard" class="app-panel active-panel">
+          <div class="panel-hero glass">
+            <div class="hero-content">
+              <h2>Welcome back, <span id="hero-user-name">User</span>! 👋</h2>
+              <p>Collaborate, manage deadlines, and build something spectacular in real-time.</p>
+            </div>
+            <button id="btn-create-project-trigger" class="btn btn-gradient">
+              <i class="fa-solid fa-plus"></i>
+              <span>New Project</span>
+            </button>
+          </div>
+
+          <div class="panel-section">
+            <div class="section-header">
+              <h3>Your Active Projects</h3>
+            </div>
+            <div id="projects-grid" class="projects-grid">
+              <!-- Dynamically populated project cards -->
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW PANEL: KANBAN BOARD -->
+        <section id="panel-board" class="app-panel">
+          <div class="board-header glass">
+            <div class="board-title-area">
+              <div class="board-title-row">
+                <h2 id="board-project-name">Project Board</h2>
+                <button id="btn-project-settings-trigger" class="btn-icon-text" title="Project Settings">
+                  <i class="fa-solid fa-gear"></i>
+                  <span>Settings</span>
+                </button>
+              </div>
+              <p id="board-project-desc">Project Description goes here.</p>
+            </div>
+            
+            <div class="board-actions">
+              <div class="members-overlap" id="board-members-list">
+                <!-- Project member avatars -->
+              </div>
+              <button id="btn-invite-member-trigger" class="btn btn-secondary">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Invite</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Task Filter & Sorting Toolbar -->
+          <div class="board-filter-toolbar glass" style="margin: 0 0 20px 0; padding: 12px 20px; display: flex; gap: 16px; align-items: center; border-radius: 12px; flex-wrap: wrap;">
+            <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:220px;">
+              <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted); font-size:0.9rem;"></i>
+              <input type="text" id="board-search-input" placeholder="Search tasks by title or details..." style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:6px 12px; color:#fff; font-size:0.85rem; outline:none; transition:all 0.3s ease;">
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:500;"><i class="fa-solid fa-filter"></i> Priority:</span>
+              <select id="board-filter-priority" style="background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:6px 12px; color:#fff; font-size:0.85rem; outline:none; cursor:pointer;">
+                <option value="all">⚡ All Priorities</option>
+                <option value="high">🔴 High Priority</option>
+                <option value="medium">🟡 Medium Priority</option>
+                <option value="low">🟢 Low Priority</option>
+              </select>
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:500;"><i class="fa-solid fa-arrow-down-wide-short"></i> Sort:</span>
+              <select id="board-sort-by" style="background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:6px 12px; color:#fff; font-size:0.85rem; outline:none; cursor:pointer;">
+                <option value="none">📅 Date Created</option>
+                <option value="priority-desc">⚡ Priority (High to Low)</option>
+                <option value="priority-asc">⚡ Priority (Low to High)</option>
+                <option value="due-asc">⏳ Due Date (Soonest first)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- The Kanban Board Grid -->
+          <div class="kanban-container">
+            <!-- TODO COLUMN -->
+            <div class="kanban-column glass" data-column="todo">
+              <div class="column-header">
+                <div class="column-title">
+                  <span class="column-dot todo"></span>
+                  <h3>To Do</h3>
+                  <span class="column-count" id="count-todo">0</span>
+                </div>
+                <button class="btn-column-add" data-column="todo" title="Add task to To Do">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div class="column-cards" id="column-todo" data-column="todo">
+                <!-- Cards injected here -->
+              </div>
+            </div>
+
+            <!-- IN PROGRESS COLUMN -->
+            <div class="kanban-column glass" data-column="inprogress">
+              <div class="column-header">
+                <div class="column-title">
+                  <span class="column-dot in-progress"></span>
+                  <h3>In Progress</h3>
+                  <span class="column-count" id="count-inprogress">0</span>
+                </div>
+                <button class="btn-column-add" data-column="inprogress" title="Add task to In Progress">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div class="column-cards" id="column-inprogress" data-column="inprogress">
+                <!-- Cards injected here -->
+              </div>
+            </div>
+
+            <!-- REVIEW COLUMN -->
+            <div class="kanban-column glass" data-column="review">
+              <div class="column-header">
+                <div class="column-title">
+                  <span class="column-dot review"></span>
+                  <h3>Review</h3>
+                  <span class="column-count" id="count-review">0</span>
+                </div>
+                <button class="btn-column-add" data-column="review" title="Add task to Review">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div class="column-cards" id="column-review" data-column="review">
+                <!-- Cards injected here -->
+              </div>
+            </div>
+
+            <!-- DONE COLUMN -->
+            <div class="kanban-column glass" data-column="done">
+              <div class="column-header">
+                <div class="column-title">
+                  <span class="column-dot done"></span>
+                  <h3>Done</h3>
+                  <span class="column-count" id="count-done">0</span>
+                </div>
+                <button class="btn-column-add" data-column="done" title="Add task to Done">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div class="column-cards" id="column-done" data-column="done">
+                <!-- Cards injected here -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW PANEL: PROJECT SETTINGS -->
+        <section id="panel-settings" class="app-panel">
+          <div class="settings-card glass">
+            <h2>Project Configuration</h2>
+            <form id="form-project-settings">
+              <div class="input-group">
+                <label for="settings-project-name">Project Title</label>
+                <input type="text" id="settings-project-name" required placeholder="Project Name">
+              </div>
+              <div class="input-group">
+                <label for="settings-project-desc">Project Description</label>
+                <textarea id="settings-project-desc" rows="3" placeholder="Describe the workspace goals..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Modifications</button>
+            </form>
+
+            <div class="divider"></div>
+
+            <h3>Workspace Membership</h3>
+            <div class="members-management-list" id="settings-members-list">
+              <!-- Members with remove option -->
+            </div>
+
+            <div class="divider warning-divider"></div>
+
+            <div class="danger-zone">
+              <h3>Danger Territory</h3>
+              <p>Once you destroy a project, all boards, tasks, comments, and attachments are permanently removed. This is non-reversible.</p>
+              <button id="btn-delete-project" class="btn btn-danger">
+                <i class="fa-regular fa-trash-can"></i>
+                <span>Permanently Delete Project</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW PANEL: USER PROFILE -->
+        <section id="panel-profile" class="app-panel">
+          <div class="profile-layout glass">
+            <div class="profile-left">
+              <div class="profile-avatar-container">
+                <img id="profile-avatar-img" src="https://ui-avatars.com/api/?name=User&background=8b5cf6&color=fff&bold=true" class="profile-big-avatar" alt="Avatar">
+              </div>
+              <h2 id="profile-username">User Name</h2>
+              <p id="profile-email">user@workspace.com</p>
+              <span class="user-since">Registered on <span id="profile-joined-date">May 20, 2026</span></span>
+            </div>
+            
+            <div class="profile-right">
+              <h3>Workspace Profile</h3>
+              <div class="profile-stats">
+                <div class="stat-box glass">
+                  <span class="stat-num" id="profile-stats-projects">0</span>
+                  <span class="stat-lbl">Projects Active</span>
+                </div>
+                <div class="stat-box glass">
+                  <span class="stat-num" id="profile-stats-tasks">0</span>
+                  <span class="stat-lbl">Tasks Assigned</span>
+                </div>
+              </div>
+
+              <h3>Assigned Task Streams</h3>
+              <div class="assigned-tasks-list" id="profile-tasks-list">
+                <!-- User assigned tasks list -->
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- SLIDE DRAWER: REAL-TIME NOTIFICATIONS -->
+      <div id="drawer-notifications" class="drawer-notifications glass">
+        <div class="drawer-header">
+          <h3><i class="fa-regular fa-bell"></i> Alerts Panel</h3>
+          <div class="drawer-actions">
+            <button id="btn-mark-all-read" class="btn-link">Mark all read</button>
+            <button id="btn-notifications-close" class="btn-icon-small"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        </div>
+        <div id="notifications-list" class="notifications-list">
+          <!-- Notification items dynamically created -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- MODAL: CREATE PROJECT -->
+  <div id="modal-create-project" class="modal-backdrop">
+    <div class="modal glass">
+      <div class="modal-header">
+        <h2>Establish New Project</h2>
+        <button class="btn-modal-close" data-modal="modal-create-project">&times;</button>
+      </div>
+      <form id="form-create-project">
+        <div class="modal-body">
+          <div class="input-group">
+            <label for="create-project-name">Project Title</label>
+            <input type="text" id="create-project-name" required placeholder="e.g. CodeAlpha Mobile App">
+          </div>
+          <div class="input-group">
+            <label for="create-project-desc">Description</label>
+            <textarea id="create-project-desc" rows="3" placeholder="Outline project milestones, scope, or details..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-modal-close" data-modal="modal-create-project">Cancel</button>
+          <button type="submit" class="btn btn-primary">Build Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE TASK -->
+  <div id="modal-create-task" class="modal-backdrop">
+    <div class="modal glass">
+      <div class="modal-header">
+        <h2>Draft New Task</h2>
+        <button class="btn-modal-close" data-modal="modal-create-task">&times;</button>
+      </div>
+      <form id="form-create-task">
+        <input type="hidden" id="create-task-column">
+        <div class="modal-body">
+          <div class="input-group">
+            <label for="create-task-title">Task Title</label>
+            <input type="text" id="create-task-title" required placeholder="e.g. Hook up Express endpoints">
+          </div>
+          <div class="input-group">
+            <label for="create-task-desc">Task Details</label>
+            <textarea id="create-task-desc" rows="3" placeholder="Detailed user stories or items..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="input-group half">
+              <label for="create-task-priority">Priority</label>
+              <select id="create-task-priority">
+                <option value="low">🟢 Low Priority</option>
+                <option value="medium" selected>🟡 Medium Priority</option>
+                <option value="high">🔴 High Priority</option>
+              </select>
+            </div>
+            <div class="input-group half">
+              <label for="create-task-due">Due Date</label>
+              <input type="date" id="create-task-due">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Assign Members</label>
+            <div class="assignees-selector-grid" id="create-task-assignees-grid">
+              <!-- Populate checklist of project members dynamically -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-modal-close" data-modal="modal-create-task">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: INVITE MEMBER -->
+  <div id="modal-invite-member" class="modal-backdrop">
+    <div class="modal glass size-sm">
+      <div class="modal-header">
+        <h2>Invite Team Member</h2>
+        <button class="btn-modal-close" data-modal="modal-invite-member">&times;</button>
+      </div>
+      <form id="form-invite-member">
+        <div class="modal-body">
+          <div class="input-group">
+            <label for="invite-email">User's Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" id="invite-email" required placeholder="colleague@workspace.com">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-modal-close" data-modal="modal-invite-member">Cancel</button>
+          <button type="submit" class="btn btn-primary">Send Invitation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: TASK DETAIL (Comments, attachments, settings) -->
+  <div id="modal-task-detail" class="modal-backdrop">
+    <div class="modal glass size-lg">
+      <div class="modal-header">
+        <div class="task-detail-header-left">
+          <span id="detail-task-id-badge" class="task-id-badge">TASK</span>
+          <h2 id="detail-task-title" contenteditable="true" class="editable-title">Task Title</h2>
+        </div>
+        <div class="task-detail-header-right">
+          <button id="btn-delete-task" class="btn btn-danger btn-icon-only" title="Delete Task"><i class="fa-regular fa-trash-can"></i></button>
+          <button class="btn-modal-close" data-modal="modal-task-detail">&times;</button>
+        </div>
+      </div>
+      
+      <div class="modal-body task-detail-layout">
+        <div class="detail-left">
+          <!-- Description -->
+          <div class="detail-section">
+            <div class="section-label"><i class="fa-solid fa-align-left"></i> Description</div>
+            <textarea id="detail-task-desc" class="task-description-editor" placeholder="Add a detailed description for this task..."></textarea>
+            <button id="btn-save-task-desc" class="btn btn-primary btn-sm btn-save-desc">Save Description</button>
+          </div>
+
+          <!-- Attachments -->
+          <div class="detail-section">
+            <div class="section-label"><i class="fa-solid fa-paperclip"></i> Task Attachments</div>
+            <div id="detail-attachments-list" class="attachments-list">
+              <!-- Dynamically rendered list of attachments -->
+            </div>
+            
+            <form id="form-upload-attachment" class="upload-attachment-form">
+              <label class="btn btn-secondary btn-sm file-input-label">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i> Upload Attachment File
+                <input type="file" id="attachment-file-input" name="attachment" style="display:none;">
+              </label>
+              <span id="attachment-file-name" class="file-name-preview"></span>
+              <button type="submit" id="btn-submit-attachment" class="btn btn-primary btn-sm" style="display:none;">Attach File</button>
+            </form>
+          </div>
+
+          <!-- Comments / Discussion -->
+          <div class="detail-section">
+            <div class="section-label"><i class="fa-regular fa-comments"></i> Workspace Discussion</div>
+            <div class="comment-input-area">
+              <img id="detail-commenter-avatar" src="" class="user-avatar" alt="Me">
+              <div class="comment-input-box">
+                <textarea id="comment-text-input" placeholder="Post an update or feedback..."></textarea>
+                <button id="btn-post-comment" class="btn btn-primary btn-sm">Comment</button>
+              </div>
+            </div>
+            <div id="detail-comments-stream" class="comments-stream">
+              <!-- Comments logs -->
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-right glass">
+          <!-- Status -->
+          <div class="meta-field">
+            <span class="meta-label">Column Status</span>
+            <select id="detail-task-status">
+              <option value="todo">To Do</option>
+              <option value="inprogress">In Progress</option>
+              <option value="review">Review</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+
+          <!-- Priority -->
+          <div class="meta-field">
+            <span class="meta-label">Priority Indicator</span>
+            <select id="detail-task-priority">
+              <option value="low">🟢 Low</option>
+              <option value="medium">🟡 Medium</option>
+              <option value="high">🔴 High</option>
+            </select>
+          </div>
+
+          <!-- Due Date -->
+          <div class="meta-field">
+            <span class="meta-label">Calendar Due Date</span>
+            <input type="date" id="detail-task-due">
+          </div>
+
+          <!-- Assignees list -->
+          <div class="meta-field">
+            <span class="meta-label">Assigned Members</span>
+            <div id="detail-task-assignees" class="task-detail-assignees-avatars">
+              <!-- Avatars with option to edit -->
+            </div>
+            
+            <div class="assignees-selector-dropdown">
+              <button type="button" class="btn btn-secondary btn-sm btn-block" id="btn-toggle-detail-assignees-picker">
+                <i class="fa-solid fa-user-plus"></i> Modify Assignment
+              </button>
+              <div id="detail-assignees-picker" class="detail-assignees-picker glass hidden">
+                <!-- Assignee checkboxes will populate here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Socket.io client -->
+  <script src="/socket.io/socket.io.js"></script>
+  
+  <!-- Core Application Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
