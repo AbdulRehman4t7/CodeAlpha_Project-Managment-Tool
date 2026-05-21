@@ -41,14 +41,14 @@ A highly premium, fully-functional, real-time project management web application
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/15e399f8-aaa5-4329-95da-fb505a1b62b6" width="300"/><br/>
-      <sub><b>Analytics Section</b></sub>
+      <sub><b>INVITE MEMBERS </b></sub>
     </td>
   </tr>
 
   <tr>
     <td colspan="2" align="center">
       <img src="https://github.com/user-attachments/assets/4c486d21-ceba-482d-884f-a9b17c724765" width="360"/><br/>
-      <sub><b>Final Output Screen</b></sub>
+      <sub><b>LOGIN PAGE</b></sub>
     </td>
   </tr>
 
