@@ -48,7 +48,7 @@ A highly premium, fully-functional, real-time project management web application
   <tr>
     <td colspan="2" align="center">
       <img src="https://github.com/user-attachments/assets/4c486d21-ceba-482d-884f-a9b17c724765" width="360"/><br/>
-      <sub><b>LOGIN PAGE</b></sub>
+      <sub><b>aADD NEWW PROJECT</b></sub>
     </td>
   </tr>
 
