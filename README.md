@@ -14,8 +14,56 @@ A highly premium, fully-functional, real-time project management web application
 6. **Robust File Attachments**: Powered by Multer. Supports uploading documents, files, or media onto specific task cards, persisting paths in MongoDB, and making them downloadable.
 7. **Workspace Team Management**: Create projects, rename details, invite new members by email address, remove users from projects, or safely leave joined projects. Includes a danger-zone delete trigger.
 8. **Interactive User Profile**: Showcases registration metadata, projects counts, tasks assigned counts, and a dashboard detailing active task streams directly linked back to their boards.
+   
 
 ---
+
+## 📸 System Outputs
+
+<div align="center">
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/8de2c65a-373c-46c6-b7bb-7debf414c0ed" width="230"/><br/>
+      <sub><b>Login Page</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/cec519d4-5fe0-4caa-9573-3e33a04694ab" width="420"/><br/>
+      <sub><b>Dashboard View</b></sub>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/3d6707cc-0256-4983-a879-7943d4c49357" width="420"/><br/>
+      <sub><b>Feature Module</b></sub>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/15e399f8-aaa5-4329-95da-fb505a1b62b6" width="300"/><br/>
+      <sub><b>Analytics Section</b></sub>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center">
+      <img src="https://github.com/user-attachments/assets/4c486d21-ceba-482d-884f-a9b17c724765" width="360"/><br/>
+      <sub><b>Final Output Screen</b></sub>
+    </td>
+  </tr>
+
+</table>
+
+</div>
+
+
+
+
+
+
+
+
+
 
 ## 🛠️ Technology Stack
 
